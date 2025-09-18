@@ -1,36 +1,3 @@
-<<<<<<< HEAD
-# Environment variables
-.env
-.env.local
-.env.production
-
-# Google Cloud credentials
-*.json
-service-account-*.json
-gcp-key.json
-
-# Deployment metadata (contains project IDs)
-deployment_metadata.json
-
-# Python
-__pycache__/
-*.pyc
-.venv/
-venv/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Requirements file (generated)
-.requirements.txt
-=======
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -227,5 +194,4 @@ my_env.tfvars
 .streamlit_chats
 .saved_chats
 .env
-.requirements.txt
->>>>>>> e35e7c2 (Initial commit)
+# .requirements.txt
