@@ -29,17 +29,27 @@ def agent_app() -> AgentEngineApp:
     return app
 
 
+<<<<<<< HEAD
 @pytest.mark.asyncio
 async def test_agent_stream_query(agent_app: AgentEngineApp) -> None:
+=======
+def test_agent_stream_query(agent_app: AgentEngineApp) -> None:
+>>>>>>> e35e7c2 (Initial commit)
     """
     Integration test for the agent stream query functionality.
     Tests that the agent returns valid streaming responses.
     """
+<<<<<<< HEAD
     # Create message and events for the async_stream_query
     message = "What's the weather in San Francisco?"
     events = []
     async for event in agent_app.async_stream_query(message=message, user_id="test"):
         events.append(event)
+=======
+    # Create message and events for the stream_query
+    message = "What's the weather in San Francisco?"
+    events = list(agent_app.stream_query(message=message, user_id="test"))
+>>>>>>> e35e7c2 (Initial commit)
     assert len(events) > 0, "Expected at least one chunk in response"
 
     # Check for valid content in the response

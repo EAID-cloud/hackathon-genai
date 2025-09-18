@@ -1,14 +1,22 @@
 # my-agent
 
 A base ReAct agent built with Google's Agent Development Kit (ADK)
+<<<<<<< HEAD
 Agent generated with [`googleCloudPlatform/agent-starter-pack`](https://github.com/GoogleCloudPlatform/agent-starter-pack) version `0.15.0`
+=======
+Agent generated with [`googleCloudPlatform/agent-starter-pack`](https://github.com/GoogleCloudPlatform/agent-starter-pack) version `0.14.1`
+>>>>>>> e35e7c2 (Initial commit)
 
 ## Project Structure
 
 This project is organized as follows:
 
 ```
+<<<<<<< HEAD
 my-awesome-agent/
+=======
+my-agent/
+>>>>>>> e35e7c2 (Initial commit)
 ├── app/                 # Core application code
 │   ├── agent.py         # Main agent logic
 │   ├── agent_engine_app.py # Agent Engine application logic
@@ -30,6 +38,7 @@ Before you begin, ensure you have:
 - **Terraform**: For infrastructure deployment - [Install](https://developer.hashicorp.com/terraform/downloads)
 - **make**: Build automation tool - [Install](https://www.gnu.org/software/make/) (pre-installed on most Unix-based systems)
 
+<<<<<<< HEAD
 ## Local Development & Testing
 
 ### 1. Clone and Setup
@@ -157,6 +166,17 @@ cat deployment_metadata.json
 
 View your deployed agent in the [Google Cloud Console](https://console.cloud.google.com/vertex-ai/agent-engines).
 
+=======
+
+## Quick Start (Local Testing)
+
+Install required packages and launch the local development environment:
+
+```bash
+make install && make playground
+```
+
+>>>>>>> e35e7c2 (Initial commit)
 ## Commands
 
 | Command              | Description                                                                                 |
@@ -171,6 +191,7 @@ View your deployed agent in the [Google Cloud Console](https://console.cloud.goo
 
 For full command options and usage, refer to the [Makefile](Makefile).
 
+<<<<<<< HEAD
 ## GitHub Publishing & Security
 
 ### 1. Environment Configuration
@@ -197,6 +218,8 @@ The project includes Cloud Build configuration in `.cloudbuild/`. To set up auto
 3. Set up the required secrets in Cloud Build
 
 See [deployment/README.md](deployment/README.md) for detailed CI/CD setup instructions.
+=======
+>>>>>>> e35e7c2 (Initial commit)
 
 ## Usage
 
@@ -205,12 +228,17 @@ This template follows a "bring your own agent" approach - you focus on your busi
 1. **Prototype:** Build your Generative AI Agent using the intro notebooks in `notebooks/` for guidance. Use Vertex AI Evaluation to assess performance.
 2. **Integrate:** Import your agent into the app by editing `app/agent.py`.
 3. **Test:** Explore your agent functionality using the Streamlit playground with `make playground`. The playground offers features like chat history, user feedback, and various input types, and automatically reloads your agent on code changes.
+<<<<<<< HEAD
 4. **Deploy:** Use the deployment instructions above to deploy to Google Cloud.
+=======
+4. **Deploy:** Set up and initiate the CI/CD pipelines, customizing tests as necessary. Refer to the [deployment section](#deployment) for comprehensive instructions. For streamlined infrastructure deployment, simply run `uvx agent-starter-pack setup-cicd`. Check out the [`agent-starter-pack setup-cicd` CLI command](https://googlecloudplatform.github.io/agent-starter-pack/cli/setup_cicd.html). Currently supports GitHub with both Google Cloud Build and GitHub Actions as CI/CD runners.
+>>>>>>> e35e7c2 (Initial commit)
 5. **Monitor:** Track performance and gather insights using Cloud Logging, Tracing, and the Looker Studio dashboard to iterate on your application.
 
 The project includes a `GEMINI.md` file that provides context for AI tools like Gemini CLI when asking questions about your template.
 
 
+<<<<<<< HEAD
 ## Monitoring and Observability
 
 The application uses OpenTelemetry for comprehensive observability with all events being sent to Google Cloud Trace and Logging for monitoring and to BigQuery for long term storage.
@@ -259,3 +287,32 @@ gcloud ai agent-engines describe AGENT_ENGINE_ID --location=us-central1 --projec
 - Check the [Google Cloud documentation](https://cloud.google.com/docs)
 - Review [Vertex AI Agent Engines guide](https://cloud.google.com/vertex-ai/docs/agent-engines)
 - Open an issue in this repository for project-specific problems
+=======
+## Deployment
+
+> **Note:** For a streamlined one-command deployment of the entire CI/CD pipeline and infrastructure using Terraform, you can use the [`agent-starter-pack setup-cicd` CLI command](https://googlecloudplatform.github.io/agent-starter-pack/cli/setup_cicd.html). Currently supports GitHub with both Google Cloud Build and GitHub Actions as CI/CD runners.
+
+### Dev Environment
+
+You can test deployment towards a Dev Environment using the following command:
+
+```bash
+gcloud config set project <your-dev-project-id>
+make backend
+```
+
+
+The repository includes a Terraform configuration for the setup of the Dev Google Cloud project.
+See [deployment/README.md](deployment/README.md) for instructions.
+
+### Production Deployment
+
+The repository includes a Terraform configuration for the setup of a production Google Cloud project. Refer to [deployment/README.md](deployment/README.md) for detailed instructions on how to deploy the infrastructure and application.
+
+
+## Monitoring and Observability
+> You can use [this Looker Studio dashboard](https://lookerstudio.google.com/reporting/46b35167-b38b-4e44-bd37-701ef4307418/page/tEnnC
+) template for visualizing events being logged in BigQuery. See the "Setup Instructions" tab to getting started.
+
+The application uses OpenTelemetry for comprehensive observability with all events being sent to Google Cloud Trace and Logging for monitoring and to BigQuery for long term storage.
+>>>>>>> e35e7c2 (Initial commit)

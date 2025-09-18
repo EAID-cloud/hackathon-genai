@@ -15,7 +15,11 @@
 variable "project_name" {
   type        = string
   description = "Project name used as a base for resource naming"
+<<<<<<< HEAD
   default     = "my-awesome-agent"
+=======
+  default     = "my-agent"
+>>>>>>> e35e7c2 (Initial commit)
 }
 
 variable "prod_project_id" {
@@ -36,13 +40,21 @@ variable "cicd_runner_project_id" {
 variable "region" {
   type        = string
   description = "Google Cloud region for resource deployment."
+<<<<<<< HEAD
   default     = "1"
+=======
+  default     = "us-central1"
+>>>>>>> e35e7c2 (Initial commit)
 }
 
 variable "host_connection_name" {
   description = "Name of the host connection to create in Cloud Build"
   type        = string
+<<<<<<< HEAD
   default     = "my-awesome-agent-github-connection"
+=======
+  default     = "my-agent-github-connection"
+>>>>>>> e35e7c2 (Initial commit)
 }
 
 variable "repository_name" {
@@ -53,7 +65,11 @@ variable "repository_name" {
 variable "telemetry_logs_filter" {
   type        = string
   description = "Log Sink filter for capturing telemetry data. Captures logs with the `traceloop.association.properties.log_type` attribute set to `tracing`."
+<<<<<<< HEAD
   default     = "labels.service_name=\"my-awesome-agent\" labels.type=\"agent_telemetry\""
+=======
+  default     = "labels.service_name=\"my-agent\" labels.type=\"agent_telemetry\""
+>>>>>>> e35e7c2 (Initial commit)
 }
 
 variable "feedback_logs_filter" {

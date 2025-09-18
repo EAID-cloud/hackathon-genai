@@ -15,7 +15,11 @@
 variable "project_name" {
   type        = string
   description = "Project name used as a base for resource naming"
+<<<<<<< HEAD
   default     = "my-awesome-agent"
+=======
+  default     = "my-agent"
+>>>>>>> e35e7c2 (Initial commit)
 }
 
 variable "dev_project_id" {
@@ -26,19 +30,31 @@ variable "dev_project_id" {
 variable "region" {
   type        = string
   description = "Google Cloud region for resource deployment."
+<<<<<<< HEAD
   default     = "1"
+=======
+  default     = "us-central1"
+>>>>>>> e35e7c2 (Initial commit)
 }
 
 variable "telemetry_logs_filter" {
   type        = string
   description = "Log Sink filter for capturing telemetry data. Captures logs with the `traceloop.association.properties.log_type` attribute set to `tracing`."
+<<<<<<< HEAD
   default     = "labels.service_name=\"my-awesome-agent\" labels.type=\"agent_telemetry\""
+=======
+  default     = "labels.service_name=\"my-agent\" labels.type=\"agent_telemetry\""
+>>>>>>> e35e7c2 (Initial commit)
 }
 
 variable "feedback_logs_filter" {
   type        = string
   description = "Log Sink filter for capturing feedback data. Captures logs where the `log_type` field is `feedback`."
+<<<<<<< HEAD
   default     = "jsonPayload.log_type=\"feedback\" jsonPayload.service_name=\"my-awesome-agent\""
+=======
+  default     = "jsonPayload.log_type=\"feedback\" jsonPayload.service_name=\"my-agent\""
+>>>>>>> e35e7c2 (Initial commit)
 }
 
 variable "app_sa_roles" {

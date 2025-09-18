@@ -36,7 +36,11 @@ engine_id = parts[5]
 
 # Convert remote agent engine ID to streaming URL.
 base_url = f"https://{location}-aiplatform.googleapis.com"
+<<<<<<< HEAD
 url_path = f"/v1/projects/{project_id}/locations/{location}/reasoningEngines/{engine_id}:streamQuery"
+=======
+url_path = f"/v1beta1/projects/{project_id}/locations/{location}/reasoningEngines/{engine_id}:streamQuery"
+>>>>>>> e35e7c2 (Initial commit)
 
 logger.info("Using remote agent engine ID: %s", remote_agent_engine_id)
 logger.info("Using base URL: %s", base_url)
@@ -56,11 +60,18 @@ class ChatStreamUser(HttpUser):
         headers["Authorization"] = f"Bearer {os.environ['_AUTH_TOKEN']}"
 
         data = {
+<<<<<<< HEAD
             "class_method": "async_stream_query",
             "input": {
                 "user_id": "test",
                 "message": "What's the weather in San Francisco?",
             },
+=======
+            "input": {
+                "message": "What's the weather in San Francisco?",
+                "user_id": "test",
+            }
+>>>>>>> e35e7c2 (Initial commit)
         }
 
         start_time = time.time()
@@ -69,7 +80,11 @@ class ChatStreamUser(HttpUser):
             headers=headers,
             json=data,
             catch_response=True,
+<<<<<<< HEAD
             name="/streamQuery async_stream_query",
+=======
+            name="/stream_messages first message",
+>>>>>>> e35e7c2 (Initial commit)
             stream=True,
             params={"alt": "sse"},
         ) as response:
@@ -93,7 +108,11 @@ class ChatStreamUser(HttpUser):
                 total_time = end_time - start_time
                 self.environment.events.request.fire(
                     request_type="POST",
+<<<<<<< HEAD
                     name="/streamQuery end",
+=======
+                    name="/stream_messages end",
+>>>>>>> e35e7c2 (Initial commit)
                     response_time=total_time * 1000,  # Convert to milliseconds
                     response_length=len(events),
                     response=response,

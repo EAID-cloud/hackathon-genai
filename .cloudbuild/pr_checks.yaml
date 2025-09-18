@@ -46,6 +46,10 @@ steps:
     env:
       - 'PATH=/usr/local/bin:/usr/bin:~/.local/bin'
 
+<<<<<<< HEAD
 logsBucket: gs://${PROJECT_ID}-my-awesome-agent-logs-data/build-logs
+=======
+logsBucket: gs://${PROJECT_ID}-my-agent-logs-data/build-logs
+>>>>>>> e35e7c2 (Initial commit)
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET

@@ -87,7 +87,11 @@ steps:
       - "builds"
       - "triggers"
       - "run"
+<<<<<<< HEAD
       - "deploy-my-awesome-agent"
+=======
+      - "deploy-my-agent"
+>>>>>>> e35e7c2 (Initial commit)
       - "--region"
       - "$LOCATION"
       - "--project"
@@ -108,9 +112,15 @@ steps:
 
 substitutions:
   _STAGING_PROJECT_ID: YOUR_STAGING_PROJECT_ID
+<<<<<<< HEAD
   _REGION: 1
 
 logsBucket: gs://${PROJECT_ID}-my-awesome-agent-logs-data/build-logs
+=======
+  _REGION: us-central1
+
+logsBucket: gs://${PROJECT_ID}-my-agent-logs-data/build-logs
+>>>>>>> e35e7c2 (Initial commit)
 options:
   substitutionOption: ALLOW_LOOSE
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
