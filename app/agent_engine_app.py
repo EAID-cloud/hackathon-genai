@@ -13,10 +13,7 @@
 # limitations under the License.
 
 # mypy: disable-error-code="attr-defined,arg-type"
-<<<<<<< HEAD
-=======
 import copy
->>>>>>> e35e7c2 (Initial commit)
 import datetime
 import json
 import logging
@@ -29,13 +26,8 @@ from google.adk.artifacts import GcsArtifactService
 from google.cloud import logging as google_cloud_logging
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider, export
-<<<<<<< HEAD
-from vertexai._genai.types import AgentEngine, AgentEngineConfig
-from vertexai.agent_engines.templates.adk import AdkApp
-=======
 from vertexai import agent_engines
 from vertexai.preview.reasoning_engines import AdkApp
->>>>>>> e35e7c2 (Initial commit)
 
 from app.agent import root_agent
 from app.utils.gcs import create_bucket_if_not_exists
