@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> e35e7c2 (Initial commit)
 # Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,60 +20,15 @@ from zoneinfo import ZoneInfo
 import google.auth
 from google.adk.agents import Agent
 
-<<<<<<< HEAD
-# Resolve project id with fallbacks so the app can load without ADC
-project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
-if not project_id:
-    try:
-        _, project_id = google.auth.default()
-    except Exception:
-        project_id = "qwiklabs-gcp-03-dddd65c1188e"
-
-os.environ.setdefault("GOOGLE_CLOUD_PROJECT", project_id)
-=======
 from vertexai.preview.generative_models import GenerativeModel
 import json
 
 _, project_id = google.auth.default()
 os.environ.setdefault("GOOGLE_CLOUD_PROJECT", project_id) # project_id
->>>>>>> e35e7c2 (Initial commit)
 os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "global")
 os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "True")
 
 
-<<<<<<< HEAD
-def get_weather(query: str) -> str:
-    """Simulates a web search. Use it get information on weather.
-
-    Args:
-        query: A string containing the location to get weather information for.
-
-    Returns:
-        A string with the simulated weather information for the queried location.
-    """
-    if "sf" in query.lower() or "san francisco" in query.lower():
-        return "It's 60 degrees and foggy."
-    return "It's 90 degrees and sunny."
-
-
-def get_current_time(query: str) -> str:
-    """Simulates getting the current time for a city.
-
-    Args:
-        city: The name of the city to get the current time for.
-
-    Returns:
-        A string with the current time information.
-    """
-    if "sf" in query.lower() or "san francisco" in query.lower():
-        tz_identifier = "America/Los_Angeles"
-    else:
-        return f"Sorry, I don't have timezone information for query: {query}."
-
-    tz = ZoneInfo(tz_identifier)
-    now = datetime.datetime.now(tz)
-    return f"The current time for query {query} is {now.strftime('%Y-%m-%d %H:%M:%S %Z%z')}"
-=======
 def extract_text_from_file(file_path: str) -> str:
     """
     Extracts text from a PDF or image file using GCP Vision API or PDF parser.
@@ -398,16 +350,11 @@ def generate_minigame_code(lesson_text: str, output_dir: str = "game_generated_c
 
     return str(Path(output_dir).resolve())
 
->>>>>>> e35e7c2 (Initial commit)
 
 
 root_agent = Agent(
     name="root_agent",
     model="gemini-2.5-flash",
-<<<<<<< HEAD
-    instruction="You are a helpful AI assistant designed to provide accurate and useful information.",
-    tools=[get_weather, get_current_time],
-=======
     instruction="You are a helpful AI assistant designed to provide accurate and useful information and educational support.",
     tools=[
         extract_text_from_file,
@@ -421,5 +368,4 @@ root_agent = Agent(
         start_game,
         answer_game,
     ],
->>>>>>> e35e7c2 (Initial commit)
 )
