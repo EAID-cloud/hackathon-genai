@@ -22,9 +22,9 @@ from google.adk.agents import Agent
 
 from vertexai.preview.generative_models import GenerativeModel
 import json
-from PyPDF2 import PdfReader
-from PIL import Image
-import pytesseract
+# from PyPDF2 import PdfReader
+# from PIL import Image
+# import pytesseract
 
 _, project_id = google.auth.default()
 os.environ.setdefault("GOOGLE_CLOUD_PROJECT", project_id) # project_id
