@@ -190,16 +190,16 @@ def generate_game(lesson_text: str) -> dict:
 
 def suggest_video(lesson_text: str) -> str:
     """
-    Suggests a YouTube video URL or generates a video script for the lesson using Vertex AI Gemini.
+    Suggests a relevant YouTube video URL for the lesson using Vertex AI Gemini. Only returns a YouTube link, never a script.
 
     Args:
         lesson_text: The full lesson text.
 
     Returns:
-        Video URL (if found) or a generated video script.
+        YouTube video URL (if found), or a message if none found.
     """
     prompt = f"""
-    You are an educational assistant. Given the following lesson text, suggest a relevant YouTube video for further learning. If you know a specific video, return its YouTube URL. If not, generate a short video script (3-5 sentences) that could be used to explain the lesson in a video. Return only the URL or the script, not both.
+    You are an educational assistant. Given the following lesson text, suggest a relevant YouTube video for further learning. Only return a single YouTube video URL (youtube.com or youtu.be). If you do not know a relevant video, reply with 'NO_VIDEO_FOUND'.
 
     Lesson:
     {lesson_text}
@@ -208,11 +208,12 @@ def suggest_video(lesson_text: str) -> str:
         model = GenerativeModel("gemini-2.5-flash")
         response = model.generate_content(prompt)
         text = response.text.strip()
-        # Heuristic: If the response contains a YouTube URL, return it; otherwise, return the script
         for line in text.splitlines():
             if "youtube.com" in line or "youtu.be" in line:
                 return line.strip()
-        return text
+        if "youtube.com" in text or "youtu.be" in text:
+            return text
+        return "NO_VIDEO_FOUND"
     except Exception as e:
         return f"Error suggesting video: {e}"
 
