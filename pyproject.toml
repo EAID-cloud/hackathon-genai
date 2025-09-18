@@ -1,9 +1,5 @@
 [project]
-<<<<<<< HEAD
-name = "my-awesome-agent"
-=======
 name = "my-agent"
->>>>>>> e35e7c2 (Initial commit)
 version = "0.1.0"
 description = ""
 authors = [
@@ -12,13 +8,8 @@ authors = [
 dependencies = [
     "google-adk~=1.8.0",
     "opentelemetry-exporter-gcp-trace~=1.9.0",
-<<<<<<< HEAD
-    "google-cloud-logging>=3.12.0",
-    "google-cloud-aiplatform[evaluation,agent-engines]~=1.113.0"
-=======
     "google-cloud-logging~=3.11.4",
     "google-cloud-aiplatform[evaluation,agent-engines]~=1.106.0"
->>>>>>> e35e7c2 (Initial commit)
 ]
 
 requires-python = ">=3.10,<3.13"
@@ -58,11 +49,7 @@ select = [
     "UP", # pyupgrade
     "RUF", # ruff specific rules
 ]
-<<<<<<< HEAD
-ignore = ["E501", "C901", "B006"] # ignore line too long, too complex
-=======
 ignore = ["E501", "C901"] # ignore line too long, too complex
->>>>>>> e35e7c2 (Initial commit)
 
 [tool.ruff.lint.isort]
 known-first-party = ["app", "frontend"]
