@@ -27,9 +27,5 @@ class Feedback(BaseModel):
     text: str | None = ""
     invocation_id: str
     log_type: Literal["feedback"] = "feedback"
-<<<<<<< HEAD
-    service_name: Literal["my-awesome-agent"] = "my-awesome-agent"
-=======
     service_name: Literal["my-agent"] = "my-agent"
->>>>>>> e35e7c2 (Initial commit)
     user_id: str = ""

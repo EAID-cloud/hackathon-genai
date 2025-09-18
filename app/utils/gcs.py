@@ -24,11 +24,7 @@ def create_bucket_if_not_exists(bucket_name: str, project: str, location: str) -
     Args:
         bucket_name: Name of the bucket to create
         project: Google Cloud project ID
-<<<<<<< HEAD
-        location: Location to create the bucket in (defaults to 1)
-=======
         location: Location to create the bucket in (defaults to us-central1)
->>>>>>> e35e7c2 (Initial commit)
     """
     storage_client = storage.Client(project=project)
 
