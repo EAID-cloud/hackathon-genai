@@ -1,4 +1,3 @@
-
 # Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +14,7 @@
 
 import datetime
 import os
+import mimetypes
 from zoneinfo import ZoneInfo
 
 import google.auth
@@ -22,6 +22,9 @@ from google.adk.agents import Agent
 
 from vertexai.preview.generative_models import GenerativeModel
 import json
+from PyPDF2 import PdfReader
+from PIL import Image
+import pytesseract
 
 _, project_id = google.auth.default()
 os.environ.setdefault("GOOGLE_CLOUD_PROJECT", project_id) # project_id
@@ -31,21 +34,44 @@ os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "True")
 
 def extract_text_from_file(file_path: str) -> str:
     """
-    Extracts text from a PDF or image file using GCP Vision API or PDF parser.
+    Extracts text from a PDF or image file using PyPDF2 for PDFs and pytesseract for images.
 
     Args:
-        file_path: Path to the uploaded file in Cloud Storage.
+        file_path: Path to the uploaded file (local or cloud storage).
 
     Returns:
         Extracted text as a string.
     """
-    # TODO: Integrate with Vision API for images, PDF parser for PDFs
-    return "Extracted lesson text from file."
+    text = ""
+    # Try to detect file type
+    mime, _ = mimetypes.guess_type(file_path)
+    ext = os.path.splitext(file_path)[1].lower()
+    try:
+        if ext == ".pdf" or (mime and "pdf" in mime):
+            # PDF extraction
+            try:
+                reader = PdfReader(file_path)
+                for page in reader.pages:
+                    text += page.extract_text() or ""
+            except Exception as e:
+                return f"ERROR: Failed to extract PDF text: {e}"
+        elif ext in [".png", ".jpg", ".jpeg", ".bmp", ".tiff"] or (mime and mime.startswith("image/")):
+            # Image OCR
+            try:
+                img = Image.open(file_path)
+                text = pytesseract.image_to_string(img)
+            except Exception as e:
+                return f"ERROR: Failed to extract image text: {e}"
+        else:
+            return "ERROR: Unsupported file type. Please upload a PDF or image file."
+    except Exception as e:
+        return f"ERROR: {e}"
+    return text.strip() or "No text found in file."
 
 
 def extract_key_concepts(lesson_text: str) -> list:
     """
-    Uses Vertex AI LLM to extract key concepts from lesson text.
+    Uses Vertex AI Gemini to extract 3-7 key concepts from lesson text.
 
     Args:
         lesson_text: The full lesson text.
@@ -53,8 +79,30 @@ def extract_key_concepts(lesson_text: str) -> list:
     Returns:
         List of key concepts.
     """
-    # TODO: Call Vertex AI LLM for summarization/key concept extraction
-    return ["Concept 1", "Concept 2"]
+    prompt = f"""
+    You are an educational assistant. Given the following lesson text, extract 3-7 key concepts or terms that are most important for understanding the material. Return them as a JSON list of strings.
+
+    Lesson:
+    {lesson_text}
+
+    Format:
+    ["concept1", "concept2", ...]
+    Return only valid JSON.
+    """
+    try:
+        model = GenerativeModel("gemini-2.5-flash")
+        response = model.generate_content(prompt)
+        text = response.text.strip()
+        start = text.find('[')
+        end = text.rfind(']')
+        if start != -1 and end != -1:
+            json_str = text[start:end+1]
+            concepts = json.loads(json_str)
+            return concepts
+        else:
+            return [text]
+    except Exception as e:
+        return [f"Error extracting concepts: {e}"]
 
 
 def generate_quiz(lesson_text: str) -> list:
@@ -142,17 +190,66 @@ def generate_game(lesson_text: str) -> dict:
 
 def suggest_video(lesson_text: str) -> str:
     """
-    Suggests a YouTube video or generates a video script for the lesson.
+    Suggests a YouTube video URL or generates a video script for the lesson using Vertex AI Gemini.
 
     Args:
         lesson_text: The full lesson text.
 
     Returns:
-        Video URL or script.
+        Video URL (if found) or a generated video script.
     """
-    # TODO: Call Vertex AI LLM or use YouTube Data API
-    return "https://youtube.com/example_video"
+    prompt = f"""
+    You are an educational assistant. Given the following lesson text, suggest a relevant YouTube video for further learning. If you know a specific video, return its YouTube URL. If not, generate a short video script (3-5 sentences) that could be used to explain the lesson in a video. Return only the URL or the script, not both.
 
+    Lesson:
+    {lesson_text}
+    """
+    try:
+        model = GenerativeModel("gemini-2.5-flash")
+        response = model.generate_content(prompt)
+        text = response.text.strip()
+        # Heuristic: If the response contains a YouTube URL, return it; otherwise, return the script
+        for line in text.splitlines():
+            if "youtube.com" in line or "youtu.be" in line:
+                return line.strip()
+        return text
+    except Exception as e:
+        return f"Error suggesting video: {e}"
+
+def suggest_online_games(lesson_text: str) -> list:
+    """
+    Suggests relevant online educational games for the lesson topic using Vertex AI Gemini.
+
+    Args:
+        lesson_text: The full lesson text.
+
+    Returns:
+        A list of dictionaries with 'title' and 'url' for each suggested game.
+    """
+    prompt = f"""
+    You are an educational assistant. Given the following lesson text, suggest 2-4 relevant, high-quality online educational games (web-based, free or freemium) that help students review or practice the topic. For each, provide a title and a direct URL. Return as a JSON list of objects: [{{"title": "...", "url": "..."}}, ...]. Only include games that are safe and appropriate for students.
+
+    Lesson:
+    {lesson_text}
+
+    Format:
+    [{{"title": "...", "url": "..."}}, ...]
+    Return only valid JSON.
+    """
+    try:
+        model = GenerativeModel("gemini-2.5-flash")
+        response = model.generate_content(prompt)
+        text = response.text.strip()
+        start = text.find('[')
+        end = text.rfind(']')
+        if start != -1 and end != -1:
+            json_str = text[start:end+1]
+            games = json.loads(json_str)
+            return games
+        else:
+            return [text]
+    except Exception as e:
+        return [{"error": f"Error suggesting games: {e}"}]
 
 def save_student_progress(student_id: str, topic: str, mastery: float) -> str:
     """
@@ -161,7 +258,6 @@ def save_student_progress(student_id: str, topic: str, mastery: float) -> str:
     Args:
         student_id: Unique student identifier.
         topic: The topic being updated.
-        mastery: Mastery score (0-1).
 
     Returns:
         Confirmation message.

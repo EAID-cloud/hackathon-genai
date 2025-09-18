@@ -1,0 +1,9 @@
+flask
+vertexai
+google-cloud-storage
+google-auth
+google-adk
+zoneinfo
+PyPDF2
+pytesseract
+Pillow
